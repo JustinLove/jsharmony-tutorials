@@ -9,7 +9,7 @@ on:
 jobs:
   test-screenshots:
 
-    runs-on: unbuntu-latest
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
