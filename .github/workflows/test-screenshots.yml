@@ -24,5 +24,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         # cache: 'npm'
+    - name: Disable AppArmor
+      run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
     - run: cp test/test-screenshots-config/* ./
     - run: npm install-test
