@@ -1,12 +1,10 @@
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
-name: JsHarmonyTutorials Screenhot Tests
+name: JsHarmonyTutorials Screenhot Tests Windows
 
 on:
   push:
-    branches: [ "master", "actions" ]
+    branches: [] # "master", "actions" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [] # "master" ]
 
 jobs:
   test-screenshots:
