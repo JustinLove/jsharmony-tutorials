@@ -27,6 +27,8 @@
   },
   "homepage": "https://github.com/apHarmony/jsharmony-tutorials",
   "devDependencies": {
+    "jsharmony-image-magick": "^1.1.0",
+    "jsharmony-report": "^1.2.0",
     "mocha": "^7.2.0"
   },
   "dependencies": {

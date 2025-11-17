@@ -2,3 +2,5 @@
 /debug.log
 /yarn.lock
 /package-lock.json
+/app.config*.js
+/data

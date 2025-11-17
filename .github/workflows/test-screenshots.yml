@@ -1,4 +1,4 @@
-name: JsHarmonyTutorials Screenhot Tests Linux
+name: JsHarmonyTutorials Screenhot Tests
 
 on:
   push:
@@ -24,11 +24,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Create tutorial shell
-      run: |
-        mkdir jsh-tutorial-shell
-        cd jsh-tutorial-shell
-        npx jsharmony-cli create tutorials
-    - name: Modify config file
-      run: sed 's/image-sharp/image-magick/' app.config.local.js | sed 's/\/\/configTutorials/configTutorials/' > app.config.local.js
-    - run: npm run test-screenshots
+    - run: cp test/test-screenshots-config/* ./
+    - run: npm install-test
