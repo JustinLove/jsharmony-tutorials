@@ -241,6 +241,8 @@ function start_jsHarmony(cb) {
   var jsHarmonyTutorials = require('./../index.js');
   jsh = new jsHarmonyTutorials.Application();
   jsh.Config.appbasepath = app_dir;
+  jsh.Config.interactive = true;
+  jsh.Config.debug_params.log_socket = false;
   jsh.Config.onServerReady.push(function () {
     if(jsh.Extensions.image.type != 'jsharmony-image-magick'){
       jsh.Servers['default'].Close();
