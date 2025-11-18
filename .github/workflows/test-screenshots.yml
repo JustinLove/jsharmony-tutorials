@@ -24,7 +24,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         # cache: 'npm' # requires a package lock checked in
-    - uses: mfinelli/setup-imagemagick@v7
+        #- uses: mfinelli/setup-imagemagick@v7
+    - run: sudo apt install imagemagick
       #- run: magick
     - run: identify
       #- name: Disable AppArmor for puppeteer sandboxing
