@@ -25,7 +25,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         # cache: 'npm' # requires a package lock checked in
     - uses: mfinelli/setup-imagemagick@v7
-    - run: magick
+      #- run: magick
     - run: identify
       #- name: Disable AppArmor for puppeteer sandboxing
       #run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
