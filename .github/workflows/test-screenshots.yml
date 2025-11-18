@@ -24,7 +24,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         # cache: 'npm' # requires a package lock checked in
-    - run: identify
     - uses: mfinelli/setup-imagemagick@v7
     - run: magick
     - run: identify
