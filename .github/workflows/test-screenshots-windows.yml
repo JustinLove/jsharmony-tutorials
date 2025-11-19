@@ -23,6 +23,6 @@ jobs:
       shell: cmd
       run: |
         call refreshenv
-        echo ::set-env name=PATH::%PATH%
+        echo %PATH% >> %GITHUB_PATH%
     - run: copy test\test-screenshots-config\* .\
     - run: npm install-test
