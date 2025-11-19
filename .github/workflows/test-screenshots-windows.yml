@@ -23,6 +23,8 @@ jobs:
       shell: cmd
       run: |
         call refreshenv
+        echo %PATH%
         echo %PATH% >> %GITHUB_PATH%
-    - run: copy test\test-screenshots-config\* .\
-    - run: npm install-test
+    - run: identify
+        #- run: copy test\test-screenshots-config\* .\
+        #- run: npm install-test
