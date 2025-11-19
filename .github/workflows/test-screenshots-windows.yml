@@ -18,7 +18,7 @@ jobs:
     #with:
     #node-version: 22.x
         # cache: 'npm' # requires a package lock checked in
-    - run: choco install -y imagemagick.app -PackageParameters LegacySupport=true
+    - run: choco install -y imagemagick.tool -PackageParameters LegacySupport=true
     - run: identify
     #- run: copy test\test-screenshots-config\* .\
     #- run: npm install-test
