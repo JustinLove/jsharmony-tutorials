@@ -19,16 +19,20 @@ jobs:
         node-version: 22.x
         # cache: 'npm' # requires a package lock checked in
     - run: choco install -y imagemagick
-    - name: Set PATH
+    - name: Extract path
+       id: getpath
+       shell: cmd
+       run: |
+         call refreshenv
+         for /f "delims=" %%G in ('where magick') do (
+             echo MAGICKPATH=%%~fG >> %GITHUB_ENV%
+         )
+    - name: try identify
       shell: cmd
       run: |
-        call refreshenv
-        echo %PATH%
-        echo %PATH% >> %GITHUB_PATH%
-    - name: test with refresh
-      shell: cmd
-      run: |
-        call refreshenv
+        echo $env:MAGICKPATH
+        echo %MAGICKPATH%
+        echo %MAGICKPATH% >> %GITHUB_PATH%
         identify
-        #- run: copy test\test-screenshots-config\* .\
-        #- run: npm install-test
+    #- run: copy test\test-screenshots-config\* .\
+    #- run: npm install-test
