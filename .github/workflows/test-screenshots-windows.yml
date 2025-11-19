@@ -25,6 +25,10 @@ jobs:
         call refreshenv
         echo %PATH%
         echo %PATH% >> %GITHUB_PATH%
-    - run: identify
+    - name: test with refresh
+      shell: cmd
+      run: |
+        call refreshenv
+        identify
         #- run: copy test\test-screenshots-config\* .\
         #- run: npm install-test
