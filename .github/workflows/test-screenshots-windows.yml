@@ -20,13 +20,13 @@ jobs:
         # cache: 'npm' # requires a package lock checked in
     - run: choco install -y imagemagick
     - name: Extract path
-       id: getpath
-       shell: cmd
-       run: |
-         call refreshenv
-         for /f "delims=" %%G in ('where magick') do (
-             echo MAGICKPATH=%%~fG >> %GITHUB_ENV%
-         )
+      id: getpath
+      shell: cmd
+      run: |
+        call refreshenv
+        for /f "delims=" %%G in ('where magick') do (
+            echo MAGICKPATH=%%~fG >> %GITHUB_ENV%
+        )
     - name: try identify
       shell: cmd
       run: |
