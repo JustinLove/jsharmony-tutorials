@@ -12,13 +12,13 @@ jobs:
     runs-on: windows-latest
 
     steps: 
-    - uses: actions/checkout@v4
-    - name: Use Node.js 22.x
-      uses: actions/setup-node@v4
-      with:
-        node-version: 22.x
+    #- uses: actions/checkout@v4
+    #- name: Use Node.js 22.x
+    #uses: actions/setup-node@v4
+    #with:
+    #node-version: 22.x
         # cache: 'npm' # requires a package lock checked in
     - run: choco install -y imagemagick -PackageParameters LegacySupport=true
-    - run: identify
+    - run: magick identify
     #- run: copy test\test-screenshots-config\* .\
     #- run: npm install-test
