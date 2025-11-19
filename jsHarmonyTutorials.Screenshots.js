@@ -185,38 +185,41 @@ exports.generateScreenshot = function(browser, url, desc, params, callback){
     console.log(_this.basepath + '/public/screenshots/'+fname);
     page.setViewport({ width: params.browserWidth, height: params.browserHeight }).then(function(){
       page.goto(fullurl, { waitUntil: 'networkidle0' }).then(function(){
-        page.evaluate(params.onload).then(function(){
-          page.evaluate(getPageInfo, params.cropToSelector).then(function(pageInfo){
-            //Apply height clipping using cropRectangle
-            if(!pageInfo.cropRectangle){
-              if(params.height){
-                pageInfo.cropRectangle = {
-                  x: params.x,
-                  y: params.y,
-                  width: (origParams.width ? origParams.width : pageInfo.pageWidth),
-                  height: params.height
-                };
+        // text caret blinks, creating inconsistent screenshots
+        page.addStyleTag({content: '* {caret-color: transparent !important;}'}).then(function() {
+          page.evaluate(params.onload).then(function(){
+            page.evaluate(getPageInfo, params.cropToSelector).then(function(pageInfo){
+              //Apply height clipping using cropRectangle
+              if(!pageInfo.cropRectangle){
+                if(params.height){
+                  pageInfo.cropRectangle = {
+                    x: params.x,
+                    y: params.y,
+                    width: (origParams.width ? origParams.width : pageInfo.pageWidth),
+                    height: params.height
+                  };
+                }
               }
-            }
-            var takeScreenshot = function(){
-              setTimeout(function(){
-                var screenshotParams = { path: fpath, type: 'png' };
-                if(pageInfo.cropRectangle) params.postClip = pageInfo.cropRectangle;
-                screenshotParams.fullPage = true;
-                page.screenshot(screenshotParams).then(function(){
-                  _this.processScreenshot(fpath, params, function(err){
-                    if(err) jsh.Log.error(err);
-                    page.close().then(function () {
-                      return callback();
-                    }).catch(function (err) { jsh.Log.error(err); });
-                  });
-                }).catch(function (err) { jsh.Log.error(err); });
-              }, params.waitBeforeScreenshot);
-            }
-            if(params.beforeScreenshot){
-              params.beforeScreenshot(jsh, page, takeScreenshot, pageInfo.cropRectangle);
-            }
-            else takeScreenshot();
+              var takeScreenshot = function(){
+                setTimeout(function(){
+                  var screenshotParams = { path: fpath, type: 'png' };
+                  if(pageInfo.cropRectangle) params.postClip = pageInfo.cropRectangle;
+                  screenshotParams.fullPage = true;
+                  page.screenshot(screenshotParams).then(function(){
+                    _this.processScreenshot(fpath, params, function(err){
+                      if(err) jsh.Log.error(err);
+                      page.close().then(function () {
+                        return callback();
+                      }).catch(function (err) { jsh.Log.error(err); });
+                    });
+                  }).catch(function (err) { jsh.Log.error(err); });
+                }, params.waitBeforeScreenshot);
+              }
+              if(params.beforeScreenshot){
+                params.beforeScreenshot(jsh, page, takeScreenshot, pageInfo.cropRectangle);
+              }
+              else takeScreenshot();
+            }).catch(function (err) { jsh.Log.error(err); });
           }).catch(function (err) { jsh.Log.error(err); });
         }).catch(function (err) { jsh.Log.error(err); });
       }).catch(function (err) { jsh.Log.error(err); });
