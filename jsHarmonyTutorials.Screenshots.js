@@ -20,6 +20,7 @@ along with this package.  If not, see <http://www.gnu.org/licenses/>.
 var ejs = require('ejs');
 var fs = require('fs');
 var path = require('path');
+var crypto = require('crypto');
 var _ = require('lodash');
 var async = require('async');
 var HelperFS = require('jsharmony/HelperFS');
@@ -259,16 +260,24 @@ exports.getScreenshot = function(url, desc, params){
   return '<img class="screenshot" src="/screenshots/' + fname + '" />';
 }
 
+var maxLength = function(string, limit) {
+  if (string.length > limit && limit > 10) {
+    var hash = crypto.createHash('sha1').update(string).digest('base64url');
+    return string.substring(0,limit-9) + '_' + hash.substring(0,8);
+  } else {
+    return string;
+  }
+}
+
 exports.getScreenshotFilename = function(url, desc, params){
   if(!params) params = {};
 
   //Generate file name
   var fname = url || '';
   if(fname && (fname[0]=='/')) fname = fname.substr(1);
-  if(fname.length > 150){
-    fname = fname.substr(0,150);
-  }
-  fname = fname + '____' + desc;
+  if(fname && (fname.startsWith('jsHarmonyFactory'))) fname = 'F' + fname.substring(16);
+  if(fname && (fname.startsWith('jsHarmonyTutorials'))) fname = 'T' + fname.substring(18);
+  fname = maxLength(fname, 50) + '____' + maxLength(desc, 40);
   if(params.width) fname += '_' + params.width;
   if(params.height) fname += '_' + params.height;
   fname = fname.toString().replace(/[^a-zA-Z0-9]+/g, '_');
