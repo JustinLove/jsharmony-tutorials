@@ -1,0 +1,27 @@
+name: JsHarmonyTutorials Screenhot Tests Linux
+
+on:
+  workflow_dispatch:
+    input:
+      #push:
+      #branches: [ "master", "actions" ]
+      #pull_request:
+      #branches: [ "master" ]
+
+jobs:
+  test-screenshots:
+
+    runs-on: ubuntu-latest
+
+    steps: 
+    - uses: actions/checkout@v4
+    - name: Use Node.js 22.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22.x
+        # cache: 'npm' # requires a package lock checked in
+    - run: sudo apt install imagemagick
+    - name: Disable AppArmor for puppeteer sandboxing
+      run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
+    - run: cp test/test-screenshots-config/* ./
+    - run: npm install-test

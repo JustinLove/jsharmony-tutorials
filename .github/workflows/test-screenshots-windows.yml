@@ -1,0 +1,28 @@
+name: JsHarmonyTutorials Screenhot Tests Windows
+
+on:
+  push:
+    branches: [ "master", "actions" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  test-screenshots:
+
+    runs-on: windows-latest
+
+    steps: 
+    - uses: actions/checkout@v4
+    - name: Use Node.js 22.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22.x
+        # cache: 'npm' # requires a package lock checked in
+    - run: choco install -y imagemagick
+    - name: Set PATH
+      shell: cmd
+      run: |
+        call refreshenv
+        echo ::set-env name=PATH::%PATH%
+    - run: copy test\test-screenshots-config\* .\
+    - run: npm install-test
