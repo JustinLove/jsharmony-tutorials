@@ -40,7 +40,9 @@ exports.generateScreenshots = function(options,callback){
   var jsh = _this.jsh;
   _this.options = _.extend({
     screenshot_folder: path.join('public','screenshots'),
-    targetTests: null
+    targetTests: null,
+    fileParams: null,
+    doNotGenerateUnstableImages: false,
   }, options);
 
   var browserParams = { ignoreHTTPSErrors: true, ignoreDefaultArgs: [ '--hide-scrollbars' ] };
@@ -98,6 +100,14 @@ exports.generateScreenshot = function(browser, url, desc, params, callback){
     if(!_.includes(_this.options.targetTests, fname)) return callback();
   }
 
+  if (_this.options.fileParams){
+    _this.options.fileParams[fname] = params;
+  }
+
+  if (_this.options.doNotGenerateUnstableImages && params && params.unstable){
+    return callback();
+  }
+
   var origParams = params||{};
   params = _.extend({ 
     x: 0, 
@@ -109,7 +119,8 @@ exports.generateScreenshot = function(browser, url, desc, params, callback){
     postClip: null, //{ x: 0, y: 0, width: xxx, height: yyy }
     cropToSelector: null, //Selector
     onload: null,
-    waitBeforeScreenshot: (exports.HEADLESS ? 150 : 1500)
+    waitBeforeScreenshot: (exports.HEADLESS ? 150 : 1500),
+    unstable: null, // screenshot has inconsistent elements, boolean, commonly a string naming the reason
   }, params);
   if(!params.browserWidth) params.browserWidth = params.x + params.width;
   if(!params.browserHeight) params.browserHeight = _this.DEFAULT_SCREENSHOT_SIZE[1];

@@ -261,7 +261,7 @@ Select links can only be used within a Popup List of Values grid.  They provide 
 <br/>
 Popup list of values are displayed when a user clicks on a magnifying glass next to a field with field.popuplov defined:
 <%-getScreenshot('jsHarmonyTutorials/FieldLinks_Select_Form?popup=1&cust_id=1&action=update','Select Links')%>
-<%-getScreenshot('jsHarmonyTutorials/FieldLinks_Select_Form?popup=1&cust_id=1&action=update','Select Links - Popup Open', { onload:function(){ return new Promise(function(resolve){
+<%-getScreenshot('jsHarmonyTutorials/FieldLinks_Select_Form?popup=1&cust_id=1&action=update','Select Links - Popup Open', { unstable: 'popup', onload:function(){ return new Promise(function(resolve){
   var $ = jshInstance.$;
   $('.cust_parent_id_xlookup.xlookup').click();
   jshInstance.XExt.waitUntil(function(){ return $('.xelemjsHarmonyTutorials_FieldLinks_Cust_LOV.unnamed_button_control_1').length; }, resolve);

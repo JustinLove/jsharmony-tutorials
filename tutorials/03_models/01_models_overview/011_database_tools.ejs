@@ -37,7 +37,7 @@ The jsHarmony Factory comes with basic tools for working with the database.  The
 
 <h3>DB SQL</h3>
 The DB SQL tool can be used to execute SQL:
-<%-getScreenshot('jsHarmonyFactory/Dev/DBSQL','Database Tools - DB SQL', { onload:function(){ return new Promise(function(resolve){
+<%-getScreenshot('jsHarmonyFactory/Dev/DBSQL','Database Tools - DB SQL', { unstable: 'runtime', onload:function(){ return new Promise(function(resolve){
   var jsh = jshInstance;
   jsh.$root('.sql').val('select * from cust;');
   jsh.$root('.runsql').click();

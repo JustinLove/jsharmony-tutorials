@@ -120,7 +120,7 @@ Actions needed to be explicitly defined since the usual primary key ("cust_id") 
 The form is rendered as follows:
 <%-getScreenshot('jsHarmonyTutorials/ModelDuplicate_Cust_Form?cust_id=1&action=update&popup=1','Duplicate Button - Form')%>
 The exec model is displayed in a popup when the Duplicate button is clicked:
-<%-getScreenshot('jsHarmonyTutorials/ModelDuplicate_Cust_Form?cust_id=1&action=update&popup=1','Duplicate Button - Popup', { onload:function(){ return new Promise(function(resolve){
+<%-getScreenshot('jsHarmonyTutorials/ModelDuplicate_Cust_Form?cust_id=1&action=update&popup=1','Duplicate Button - Popup', { unstable: 'popup', onload:function(){ return new Promise(function(resolve){
   var $ = jshInstance.$;
   $('.xform_button.duplicate').click();
   jshInstance.XExt.waitUntil(function(){ return $('.xformjsHarmonyTutorials_ModelDuplicate_Cust_Duplicate:visible').length; }, resolve);

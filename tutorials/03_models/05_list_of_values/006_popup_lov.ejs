@@ -64,7 +64,7 @@ The popup list of values load a grid in a popup, allowing the user to select a r
   var $ = jshInstance.$;
   $('.cust_parent_id_xlookup.xlookup').click();
   jshInstance.XExt.waitUntil(function(){ return $('.xrow_jsHarmonyTutorials_FieldLOV_Popup_Cust_LOV').length; }, resolve);
-}); } })%>
+}); }, unstable: 'popup' })%>
 
 The popup list of values can also be used in a grid:
 <%-getScreenshot('jsHarmonyTutorials/FieldLOV_Popup_Basic_Grid?popup=1','Popup List of Values - Basic Grid')%>
@@ -185,7 +185,7 @@ The field.popuplov.popupiconstyle property adds style attributes to the &lt;a&gt
 
 <h4>field.popuplov.popupstyle</h4>
 The field.popuplov.popupstyle property styles the container DIV with the popup grid.  Setting the width and height styles will change the width and height of the popup:
-<%-getScreenshot('jsHarmonyTutorials/FieldLOV_Popup_PopupStyle?popup=1&action=update&cust_id=2','Popup List of Values - popuplov.popupstyle', { onload:function(){ return new Promise(function(resolve){
+<%-getScreenshot('jsHarmonyTutorials/FieldLOV_Popup_PopupStyle?popup=1&action=update&cust_id=2','Popup List of Values - popuplov.popupstyle', { unstable: 'popup', onload:function(){ return new Promise(function(resolve){
   var $ = jshInstance.$;
   $('.cust_parent_id_xlookup.xlookup').click();
   jshInstance.XExt.waitUntil(function(){ return $('.xrow_jsHarmonyTutorials_FieldLOV_Popup_Cust_LOV').length; }, resolve);
@@ -226,7 +226,7 @@ In addition to standard field events such as "onchange", the popup has an additi
 The field.popup.onpopup event can be used to initialize the search filter on the grid with a default filter.<br/>
 <br/>
 In the following example, the filter for the Parent Customer can be set to exclude the current Customer ID:
-<%-getScreenshot('jsHarmonyTutorials/FieldLOV_Popup_InitializingSearch?popup=1&action=update&cust_id=2','Popup List of Values - Events / Initializing Search', { onload:function(){ return new Promise(function(resolve){
+<%-getScreenshot('jsHarmonyTutorials/FieldLOV_Popup_InitializingSearch?popup=1&action=update&cust_id=2','Popup List of Values - Events / Initializing Search', { unstable: 'popup', onload:function(){ return new Promise(function(resolve){
   var $ = jshInstance.$;
   $('.cust_parent_id_xlookup.xlookup').click();
   jshInstance.XExt.waitUntil(function(){ return $('.xrow_jsHarmonyTutorials_FieldLOV_Popup_Cust_LOV').length; }, resolve);

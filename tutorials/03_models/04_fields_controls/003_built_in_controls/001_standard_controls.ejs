@@ -128,7 +128,7 @@ The dropdown control is used to select from a List of Values.  More information 
 
 Clicking on the dropdown will open the list of values:
 
-<%-getScreenshot('jsHarmonyTutorials/FieldStandardControls_Form?popup=1&action=update&x_primary=1', 'Standard Controls - Dropdown Open', { cropToSelector: '.x_dropdown', waitBeforeScreenshot: 100, beforeScreenshot:function(jsh, page, cb, cropRectangle){
+<%-getScreenshot('jsHarmonyTutorials/FieldStandardControls_Form?popup=1&action=update&x_primary=1', 'Standard Controls - Dropdown Open', { cropToSelector: '.x_dropdown', waitBeforeScreenshot: 200, beforeScreenshot:function(jsh, page, cb, cropRectangle){
   if(cropRectangle) cropRectangle.height += 65;
   page.click('.x_dropdown').then(cb).catch(function (err) { jsh.Log.error(err); });
 } })%>
@@ -188,7 +188,7 @@ For example:
 </pre>
 
 The following example uses the date control on unbound fields:
-<%-getScreenshot('jsHarmonyTutorials/FieldStandardControls_DateFormat?popup=1','Standard Controls - Date Formatting', { onload:function(){ return new Promise(function(resolve){
+<%-getScreenshot('jsHarmonyTutorials/FieldStandardControls_DateFormat?popup=1','Standard Controls - Date Formatting', { unstable: 'timestamp', onload:function(){ return new Promise(function(resolve){
   jshInstance.$(document.activeElement).blur();
   jshInstance.$('.datepicker').first().datepicker('hide');
   return resolve();

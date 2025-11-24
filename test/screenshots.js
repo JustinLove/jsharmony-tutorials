@@ -7,6 +7,8 @@ var async = require('async');
 var HelperFS = require('jsharmony/HelperFS');
 
 var targetTests = null;
+var fileParams = {};
+var doNotGenerateUnstableImages = false;
 
 var DO_NO_CLEAN_BEFORE_TEST = false;
 
@@ -17,6 +19,9 @@ for(var i=0;i<process.argv.length;i++){
     targetTests = targetTests || [];
     if(process.argv.length >= i) i++;
     targetTests.push(process.argv[i]);
+  }
+  if(arg == '--do-not-generate-unstable-images'){
+    doNotGenerateUnstableImages = true;
   }
 }
 
@@ -108,6 +113,10 @@ describe('Compare Screenshots', function() {
     console.log('# of generated images to test '+fs.readdirSync(screenshots_generated_dir).length);
     let failImages = [];
     async.eachLimit(files, 1, function(imageName, file_cb){
+      if(fileParams[imageName] && fileParams[imageName].unstable){
+        console.log('skipping comparison on unstable image: ', imageName);
+        return file_cb();
+      }
       if(!fs.existsSync(path.join(screenshots_generated_dir,imageName))){
         failImages[imageName]={name:imageName,reason:'New image was not generated'};
         return file_cb();
@@ -249,8 +258,14 @@ function start_jsHarmony(cb) {
       jsh.DB['default'].Close();
       return setTimeout(function(){ cb(new Error('Screenshot tests require jsharmony-image-magick extension')); }, 1000);
     }
-    jsh.Modules.jsHarmonyTutorials.generateScreenshots({screenshot_folder:screenshots_generated_dir, targetTests: targetTests},function () {
+    jsh.Modules.jsHarmonyTutorials.generateScreenshots({
+      screenshot_folder: screenshots_generated_dir,
+      targetTests: targetTests,
+      fileParams: fileParams,
+      doNotGenerateUnstableImages: doNotGenerateUnstableImages
+    },function () {
       jsh.Servers['default'].Close();
+      jsh.DB['default'].Close();
       cb();
     });
   });

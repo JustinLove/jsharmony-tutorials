@@ -104,7 +104,7 @@ If a field is unbound, it is not sent to the server for API operations, and are 
 When an API operation causes a reload of local data, the unbound values are cached and then restored after reload, so that the data does not change on the user's interface:
 
 <h4>Cached Unbound Data on Form</h4>
-<%-getScreenshot('jsHarmonyTutorials/FieldUnbound_Cache_Form?action=update&x_primary=1&popup=1','Cached Unbound Data Between Refresh - Form')%>
+<%-getScreenshot('jsHarmonyTutorials/FieldUnbound_Cache_Form?action=update&x_primary=1&popup=1','Cached Unbound Data Between Refresh - Form', { unstable: 'timestamp' })%>
 <pre>
 { 
   "table":"all_controls",
@@ -123,7 +123,7 @@ When an API operation causes a reload of local data, the unbound values are cach
 </pre>
 
 <h4>Cached Unbound Data on Form-M</h4>
-<%-getScreenshot('jsHarmonyTutorials/FieldUnbound_Cache_FormM?action=update&popup=1','Cached Unbound Data Between Refresh - Form-M')%>
+<%-getScreenshot('jsHarmonyTutorials/FieldUnbound_Cache_FormM?action=update&popup=1','Cached Unbound Data Between Refresh - Form-M', { unstable: 'timestamp' })%>
 <pre>
 { 
   "table":"all_controls",
@@ -142,7 +142,7 @@ When an API operation causes a reload of local data, the unbound values are cach
 </pre>
 
 <h4>Cached Unbound Data on Grid</h4>
-<%-getScreenshot('jsHarmonyTutorials/FieldUnbound_Cache_Grid?popup=1','Cached Unbound Data Between Refresh - Grid')%>
+<%-getScreenshot('jsHarmonyTutorials/FieldUnbound_Cache_Grid?popup=1','Cached Unbound Data Between Refresh - Grid', { unstable: 'timestamp' })%>
 <pre>
 { 
   "table":"all_controls",
@@ -211,7 +211,7 @@ The following methods for unbound field initial values are supported:
   <li>field.name returned by model.sqlselect statement</li>
 </ul>
 
-<%-getScreenshot('jsHarmonyTutorials/FieldUnbound_InitialValue?action=update&x_primary=1&auto_initial_qs=abc&popup=1','Unbound Default / Initial Values')%>
+<%-getScreenshot('jsHarmonyTutorials/FieldUnbound_InitialValue?action=update&x_primary=1&auto_initial_qs=abc&popup=1','Unbound Default / Initial Values', { unstable: 'timestamp' })%>
 <pre>
 { 
   "table":"all_controls",
@@ -429,7 +429,7 @@ The "Form Launcher" demonstrates an unbound popuplov control, as well as shortcu
 <h4>Customer Launcher Form</h4>
 <%-getScreenshot('jsHarmonyTutorials/FieldUnbound_Launcher?popup=1','Unbound Example: Shortcut Form Launcher w/Popup LOV')%>
 <h4>Customer Launcher Form - Magnifying Glass - Popup LOV Selection</h4>
-<%-getScreenshot('jsHarmonyTutorials/FieldUnbound_Launcher?popup=1','Unbound Example: Shortcut Form Launcher w/Popup LOV - Popup LOV Selection', { onload:function(){ return new Promise(function(resolve){
+<%-getScreenshot('jsHarmonyTutorials/FieldUnbound_Launcher?popup=1','Unbound Example: Shortcut Form Launcher w/Popup LOV - Popup LOV Selection', { unstable: 'popup', onload:function(){ return new Promise(function(resolve){
   jshInstance.$('.cust_id_xlookup').click();
   jshInstance.XExt.waitUntil(function(){ return !!jshInstance.$('.cust_name:visible').length; }, resolve);
 }); }
