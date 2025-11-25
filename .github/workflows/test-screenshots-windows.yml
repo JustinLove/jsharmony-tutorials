@@ -29,5 +29,6 @@ jobs:
         name: test-screenshots
         path: |
           data/test-screenshots/screenshots/
+          data/test-screenshots/diff_screenshots/
           data/test-screenshots/screenshots.result.html
         retention-days: 1
