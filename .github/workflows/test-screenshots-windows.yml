@@ -20,4 +20,14 @@ jobs:
         # cache: 'npm' # requires a package lock checked in
     - run: choco install -y imagemagick.tool -PackageParameters LegacySupport=true
     - run: copy test\test-screenshots-config\* .\
-    - run: npm install-test
+    - name: npm install-test
+      id: test
+      run: npm install-test
+    - uses: actions/upload-artifact@v4
+      if: ${{ failure() && steps.test.conclusion == 'failure' }}
+      with:
+        name: test-screenshots
+        path: |
+          data/test-screenshots/screenshots/
+          data/test-screenshots/screenshots.result.html
+        retention-days: 1
