@@ -135,10 +135,10 @@ var site = jsh.Sites['main'];
 site.show_system_errors = false;
 </pre>
 <h4>System Errors Enabled:</h4>
-<%-getScreenshot('jsHarmonyTutorials/ModelErrorHandling_ShowSystemErrors_Enabled','Error Handling - Show System Error Details')%>
+<%-getScreenshot('jsHarmonyTutorials/ModelErrorHandling_ShowSystemErrors_Enabled','Error Handling - Show System Error Details', { unstable: 'text-rendering' } )%>
 
 <h4>System Errors Disabled:</h4>
-<%-getScreenshot('jsHarmonyTutorials/ModelErrorHandling_ShowSystemErrors_Disabled','Error Handling - Do Not Show System Error Details')%>
+<%-getScreenshot('jsHarmonyTutorials/ModelErrorHandling_ShowSystemErrors_Disabled','Error Handling - Do Not Show System Error Details', { unstable: 'text-rendering' } )%>
 
 <h3>Monitoring Global Variables</h3>
 jsHarmony comes with a client-side global variable monitor.  If global variable monitoring is enabled, and  a new global variable is created client-side, a popup message will be displayed:
@@ -189,7 +189,7 @@ WARNING + NOTICE = 6
 
 <h3>Model Viewer</h3>
 In the jsHarmony Factory Developer tab, the Model Viewer shows the final parsed model and field definition for all models, with all fields added and properties resolved:
-<%-getScreenshot('jsHarmonyFactory/Dev/Models?modelid=jsHarmony%2F_BASE_HTML_MESSAGE','Error Handling - Model Viewer')%>
+<%-getScreenshot('jsHarmonyFactory/Dev/Models?modelid=jsHarmony%2F_BASE_HTML_MESSAGE','Error Handling - Model Viewer', { unstable: 'filepath' })%>
 The user must have the Developer role in order to use the Model Viewer.
 
 <h3>Debug Console</h3>
@@ -217,4 +217,4 @@ Using the Debug Console should generally be avoided in production, since the log
 
 <h3>Error Codes</h3>
 The following standard error codes are returned by jsHarmony:
-<%-getScreenshot('jsHarmonyTutorials/ModelErrorHandling_ErrorCodes?popup=1','jsHarmony Error Codes')%>
+<%-getScreenshot('jsHarmonyTutorials/ModelErrorHandling_ErrorCodes?popup=1','jsHarmony Error Codes', { unstable: 'text-rendering' } )%>

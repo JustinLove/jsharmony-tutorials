@@ -87,4 +87,4 @@ Exec forms are unbound, except during initial load.  Exec forms can be used for:
 
 <h3 data-level="2">Report Layout</h3>
 Reports have two components - the form used to enter report parameters, and the actual report, which is a PDF rendered from generated HTML.
-<%-getScreenshot('jsHarmonyFactory/Reports/SysUser_Listing?popup=1','Report')%>
+<%-getScreenshot('jsHarmonyFactory/Reports/SysUser_Listing?popup=1','Report', { unstable: 'text-rendering' } )%>
