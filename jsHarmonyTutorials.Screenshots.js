@@ -137,8 +137,12 @@ exports.generateScreenshot = function(browser, url, desc, params, callback){
       jshInstance.XExt.waitUntil(
         function(){ return jshInstance.init_complete; },
         function(){
-          if(jshInstance) jshInstance.XWindowResize();
-          return base_onload().then(resolve);
+          var onFontsReady = function(){
+            if(jshInstance) jshInstance.XWindowResize();
+            return base_onload().then(resolve);
+          };
+          if (!document.fonts) return onFontsReady();
+          document.fonts.ready.then(onFontsReady);
         },
         function(f){ if ((new Date().getTime() - startTime) > 5000) { f(); return false; } }
       );
