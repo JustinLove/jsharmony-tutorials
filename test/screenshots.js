@@ -109,7 +109,9 @@ describe('Compare Screenshots', function() {
 
   it('compare images', function(done) {
     this.timeout(600000);
-    let files = fs.readdirSync(screenshots_source_dir);
+    let files = _.filter(fs.readdirSync(screenshots_source_dir), function(file){
+      return fs.statSync(path.join(screenshots_source_dir, file)).isFile();
+    });
     if(targetTests){
       files = _.filter(files, function(file){ return _.includes(targetTests, file); });
     }
