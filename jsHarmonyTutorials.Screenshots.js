@@ -48,7 +48,10 @@ exports.generateScreenshots = function(options,callback){
 
   var browserParams = { ignoreHTTPSErrors: true, ignoreDefaultArgs: [ '--hide-scrollbars' ] };
   if(!exports.HEADLESS) browserParams.headless = false;
-  if(process.env.CI) browserParams.dumpio = true;
+  if(process.env.CI){
+    browserParams.dumpio = true;
+    browserParams.args = [ '--disable-gpu' ];
+  }
 
   jsh.Extensions.report.getPuppeteer(function(err, puppeteer){
     if(err){ jsh.Log.error(err); return callback(err); }
