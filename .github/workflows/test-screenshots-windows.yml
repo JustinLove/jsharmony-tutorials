@@ -11,8 +11,14 @@ on:
 jobs:
   test-screenshots:
 
-    runs-on: windows-2022
+    runs-on: windows-latest
     timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        chrome_args: [ '--disable-gpu-sandbox', '--in-process-gpu', '--no-sandbox' ]
+    env:
+      CHROME_ARGS: ${{ matrix.chrome_args }}
 
     steps: 
     - uses: actions/checkout@v4
@@ -29,7 +35,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       if: ${{ failure() && steps.test.conclusion == 'failure' }}
       with:
-        name: test-screenshots
+        name: test-screenshots${{ matrix.chrome_args }}
         path: |
           data/test-screenshots/screenshots/
           data/test-screenshots/diff_screenshots/
