@@ -12,6 +12,7 @@ jobs:
   test-screenshots:
 
     runs-on: windows-latest
+    timeout-minutes: 25
 
     steps: 
     - uses: actions/checkout@v4

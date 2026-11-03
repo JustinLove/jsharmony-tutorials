@@ -48,10 +48,16 @@ exports.generateScreenshots = function(options,callback){
 
   var browserParams = { ignoreHTTPSErrors: true, ignoreDefaultArgs: [ '--hide-scrollbars' ] };
   if(!exports.HEADLESS) browserParams.headless = false;
+  if(process.env.CI){
+    browserParams.dumpio = true;
+    browserParams.args = [ '--no-sandbox' ];
+  }
 
   jsh.Extensions.report.getPuppeteer(function(err, puppeteer){
-    if(err) return jsh.Log.error(err);
-    puppeteer.launch(browserParams).then(function(browser){
+    if(err){ jsh.Log.error(err); return callback(err); }
+    console.log('Launching browser');
+    withTimeout(puppeteer.launch(browserParams), exports.BROWSER_TIMEOUT, 'Timed out launching browser').then(function(browser){
+      console.log('Browser ready');
       HelperFS.funcRecursive(_this.tutfolder,function(filepath, relativepath, file_cb){
         //For each File
         fs.readFile(filepath, 'utf8', function(err, txt){
@@ -71,19 +77,28 @@ exports.generateScreenshots = function(options,callback){
   
           async.eachLimit(screenshots, 1, function(screenshot, screenshot_cb){
             _this.generateScreenshot(browser, screenshot.url, screenshot.desc, screenshot.params, screenshot_cb);
-          }, function(err){
-            if(err){ jsh.Log.error(err); }
-            return file_cb();
-          });
+          }, file_cb);
         });
       },undefined,undefined,function(err){
         if(err){ jsh.Log.error(err); }
         browser.close();
-        return callback();
+        return callback(err);
       });
-    }).catch(function(err){ jsh.Log.error(err); });
+    }).catch(function(err){ jsh.Log.error(err); return callback(err); });
   });
 }
+
+exports.BROWSER_TIMEOUT = 60000;
+
+var withTimeout = function(promise, ms, msg){
+  return new Promise(function(resolve, reject){
+    var timer = setTimeout(function(){ reject(new Error(msg)); }, ms);
+    promise.then(
+      function(rslt){ clearTimeout(timer); resolve(rslt); },
+      function(err){ clearTimeout(timer); reject(err); }
+    );
+  });
+};
 
 exports.generateScreenshot = function(browser, url, desc, params, callback){
   var _this = this;
@@ -137,8 +152,12 @@ exports.generateScreenshot = function(browser, url, desc, params, callback){
       jshInstance.XExt.waitUntil(
         function(){ return jshInstance.init_complete; },
         function(){
-          if(jshInstance) jshInstance.XWindowResize();
-          return base_onload().then(resolve);
+          var onFontsReady = function(){
+            if(jshInstance) jshInstance.XWindowResize();
+            return base_onload().then(resolve);
+          };
+          if (!document.fonts) return onFontsReady();
+          document.fonts.ready.then(onFontsReady);
         },
         function(f){ if ((new Date().getTime() - startTime) > 5000) { f(); return false; } }
       );
@@ -211,7 +230,18 @@ exports.generateScreenshot = function(browser, url, desc, params, callback){
     });
   };
 
-  browser.newPage().then(function (page) {
+  var page = null;
+  var isDone = false;
+  var fail = function(err){
+    jsh.Log.error(err);
+    if(isDone) return;
+    isDone = true;
+    if(page) page.close().catch(function(){ });
+    return callback(err);
+  };
+
+  withTimeout(browser.newPage(), exports.BROWSER_TIMEOUT, 'Timed out creating browser page').then(function (newPage) {
+    page = newPage;
     var port = jsh.Servers['default'].servers[0].address().port;
     var fullurl = 'http://localhost:'+port+url;
     console.log(_this.basepath + '/public/screenshots/'+fname);
@@ -238,7 +268,7 @@ exports.generateScreenshot = function(browser, url, desc, params, callback){
                     function(){
                       page.evaluate(addPageContent, generateHoverDiv(excludeRectangle)).then(function(){
                         done();
-                      }).catch(function (err) { jsh.Log.error(err); }); 
+                      }).catch(done);
                     }
                   );
                 }, function(err){
@@ -276,23 +306,24 @@ exports.generateScreenshot = function(browser, url, desc, params, callback){
                       _this.processScreenshot(fpath, params, function(err){
                         if(err) jsh.Log.error(err);
                         page.close().then(function () {
+                          isDone = true;
                           return callback();
-                        }).catch(function (err) { jsh.Log.error(err); });
+                        }).catch(fail);
                       });
-                    }).catch(function (err) { jsh.Log.error(err); });
+                    }).catch(fail);
                   }, params.waitBeforeScreenshot);
                 }
                 if(params.beforeScreenshot){
                   params.beforeScreenshot(jsh, page, takeScreenshot, pageInfo.cropRectangle);
                 }
                 else takeScreenshot();
-              }).catch(function (err) { jsh.Log.error(err); });
-            }).catch(function (err) { jsh.Log.error(err); });
-          }).catch(function (err) { jsh.Log.error(err); });
-        }).catch(function (err) { jsh.Log.error(err); });
-      }).catch(function (err) { jsh.Log.error(err); });
-    }).catch(function (err) { jsh.Log.error(err); });
-  }).catch(function (err) { jsh.Log.error(err); });
+              }).catch(fail);
+            }).catch(fail);
+          }).catch(fail);
+        }).catch(fail);
+      }).catch(fail);
+    }).catch(fail);
+  }).catch(fail);
 }
 
 exports.processScreenshot = function(fpath, params, callback){

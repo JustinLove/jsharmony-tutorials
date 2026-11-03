@@ -7,7 +7,7 @@
   "fields": [
     {"control":"label_mmddyyyy","caption":"label_mmddyyyy","unbound":true,"default":"5/21/2019"},
     {"control":"label_hhmmss","caption":"label_hhmmss","unbound":true,"default":"5/21/2019 2:34 pm"},
-    {"control":"label_hhmmssz","caption":"label_hhmmssz","unbound":true,"default":"5/21/2019 2:34 pm", "name":"label_hhmmssz"},
+    {"control":"label_hhmmssz","caption":"label_hhmmssz","unbound":true,"default":"5/21/2019 2:34 pm", "name":"label_hhmmssz", "controlstyle": "width: 100px"},
     {"control":"label_VS","caption":"label_VS","unbound":true,"default":"Lorem"},
     {"control":"label_S","caption":"label_S","unbound":true,"default":"Lorem ipsum dolor"},
     {"control":"label_M","caption":"label_M","unbound":true,"default":"Lorem ipsum dolor sit amet"},
