@@ -269,10 +269,10 @@ function start_jsHarmony(cb) {
       targetTests: targetTests,
       fileParams: fileParams,
       doNotGenerateUnstableImages: doNotGenerateUnstableImages
-    },function () {
+    },function (err) {
       jsh.Servers['default'].Close();
       jsh.DB['default'].Close();
-      cb();
+      cb(err);
     });
   });
   jsh.Run();
