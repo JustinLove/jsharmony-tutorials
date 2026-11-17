@@ -329,7 +329,7 @@ exports.getScreenshot = function(url, desc, params){
 
 var maxLength = function(string, limit) {
   if (string.length > limit && limit > 10) {
-    var hash = crypto.createHash('sha1').update(string).digest('base64url');
+    var hash = crypto.createHash('sha1').update(string).digest('base64');
     return string.substring(0,limit-9) + '_' + hash.substring(0,8);
   } else {
     return string;
