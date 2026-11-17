@@ -178,7 +178,7 @@ jsHarmonyTutorials.prototype.Init = function(config){
       });
       if(outline_html && (outline_count > 1)) xdtutorial_overview.prepend('<ul class="tutorial_outline">'+outline_html+'</ul>');
       var xdIntro = jsh.xd('.tutorial_overview .tutorials_intro');
-      if(xdIntro.length) xdtutorial_overview.prepend(xdIntro);
+      if(xdIntro.length) xdtutorial_overview.prepend(xdIntro.elements);
 
       //Select tab
       jsh.xd('.tutorial_tabs a').class.remove('selected');
